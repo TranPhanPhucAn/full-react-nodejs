@@ -12,7 +12,7 @@ import "./Login.scss";
 
 // import adminService from "../services/adminService";
 // import { divide } from "lodash";
-import handleLoginApi from "../../services/userService";
+import { handleLoginApi } from "../../services/userService";
 class Login extends Component {
   constructor(props) {
     super(props);
@@ -93,9 +93,9 @@ class Login extends Component {
                 />
                 <span onClick={() => this.handleisShowPasswordHidePassword()}>
                   {this.state.isShowPassword === false ? (
-                    <i class="fas fa-eye-slash"></i>
+                    <i className="fas fa-eye-slash"></i>
                   ) : (
-                    <i class="far fa-eye "></i>
+                    <i className="far fa-eye "></i>
                   )}
                 </span>
               </div>
@@ -117,7 +117,7 @@ class Login extends Component {
             <div className="col-12 social-login">
               <i className="fab fa-google-plus-g google"></i>
               {/* <i className="fab fa-facebook facebook"></i> */}
-              <i class="fab fa-facebook-f facebook"></i>
+              <i className="fab fa-facebook-f facebook"></i>
             </div>
           </div>
         </div>
