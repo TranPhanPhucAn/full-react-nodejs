@@ -4,12 +4,19 @@ import { connect } from "react-redux";
 import "./HomeHeader.scss";
 import logo from "../../assets/logo.svg";
 import { FormattedMessage } from "react-intl";
+import { languages } from "../../utils";
+import { changeLanguageApp } from "../../store/actions/appActions";
 class HomeHeader extends Component {
+  changeLanguage = (language) => {
+    // alert(language);
+    this.props.changeLanguageAppRedux(language);
+  };
   render() {
     // const { isLoggedIn } = this.props;
     // let linkToRedirect = isLoggedIn ? "/system/user-manage" : "/login";
     console.log("this props: ", this.props);
     // return <Redirect to={linkToRedirect} />;
+    let language = this.props.language;
     return (
       <React.Fragment>
         <div className="home-header-container">
@@ -67,8 +74,28 @@ class HomeHeader extends Component {
                 <i className="fas fa-question-circle"></i>
                 <FormattedMessage id="homeheader.support" />
               </div>
-              <div className="language-vn">VN</div>
-              <div className="language-en">EN</div>
+              <div
+                className={
+                  language === languages.VI
+                    ? "language-vi active"
+                    : "language-vi"
+                }
+              >
+                <span onClick={() => this.changeLanguage(languages.VI)}>
+                  VN
+                </span>
+              </div>
+              <div
+                className={
+                  language === languages.EN
+                    ? "language-en active"
+                    : "language-en"
+                }
+              >
+                <span onClick={() => this.changeLanguage(languages.EN)}>
+                  EN
+                </span>
+              </div>
             </div>
           </div>
         </div>
@@ -154,7 +181,9 @@ const mapStateToProps = (state) => {
 };
 
 const mapDispatchToProps = (dispatch) => {
-  return {};
+  return {
+    changeLanguageAppRedux: (language) => dispatch(changeLanguageApp(language)),
+  };
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(HomeHeader);
