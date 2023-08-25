@@ -20,6 +20,9 @@
     "child5": "Mental health",
     "child6": "Dental examination"
   },
+  "header": {
+    "welcome": "Welcome"
+  },
   "common": {
     "add": "Add",
     "edit": "Edit",
@@ -59,7 +62,34 @@
       "system-parameter": {
         "header": "System-parameter"
       }
+    },
+    "admin": {
+      "manage-user": "Users system",
+      "manage-doctor": "Manage doctor",
+      "manage-admin": "Manage admin",
+      "crud": "CRUD user",
+      "crud-redux": "CRUD redux",
+      "clinic": "Clinic",
+      "manage-clinic": "Manage clinic",
+      "specialty": "specialty",
+      "manage-specialty": "Manage specialty",
+      "handbook": "Handbook",
+      "manage-handbook": "Manage handbook"
     }
+  },
+  "manage-user": {
+    "add": "Add a new user",
+    "email": "Email",
+    "password": "Password",
+    "first-name": "First name",
+    "last-name": "Last name",
+    "phone-number": "Phone number",
+    "address": "Address",
+    "gender": "Gender",
+    "position": "Position",
+    "role": "Role",
+    "image": "Avatar",
+    "save": "Save user"
   },
   "system": {
     "user-manage": {
