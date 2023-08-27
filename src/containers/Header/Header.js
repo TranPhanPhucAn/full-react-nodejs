@@ -15,7 +15,7 @@ class Header extends Component {
   render() {
     const { processLogout, language, userInfo } = this.props;
     // console.log("check language: ", language);
-    console.log("check props: ", this.props);
+    // console.log("check props: ", this.props);s
     return (
       <div className="header-container">
         {/* thanh navigator */}

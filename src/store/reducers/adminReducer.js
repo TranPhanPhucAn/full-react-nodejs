@@ -38,6 +38,7 @@ const initialState = {
   genders: [],
   roles: [],
   positions: [],
+  users: [],
 };
 
 const adminReducer = (state = initialState, action) => {
@@ -63,7 +64,7 @@ const adminReducer = (state = initialState, action) => {
         ...copyState,
       };
     case actionTypes.FETCH_POSITION_SUCCESS:
-      console.log("position success");
+      // console.log("position success");
       state.positions = action.data;
       return {
         ...state,
@@ -74,13 +75,23 @@ const adminReducer = (state = initialState, action) => {
         ...state,
       };
     case actionTypes.FETCH_ROLE_SUCCESS:
-      console.log("check action role:", action);
+      // console.log("check action role:", action);
       state.roles = action.data;
       return {
         ...state,
       };
     case actionTypes.FETCH_ROLE_FAILED:
       state.roles = [];
+      return {
+        ...state,
+      };
+    case actionTypes.FETCH_ALL_USERS_SUCCESS:
+      state.users = action.users;
+      return {
+        ...state,
+      };
+    case actionTypes.FETCH_ALL_USERS_FAILED:
+      state.users = [];
       return {
         ...state,
       };

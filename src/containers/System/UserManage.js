@@ -88,7 +88,7 @@ class UserManage extends Component {
       console.log("check id:", userId);
 
       let response = await deleteUser(userId);
-      console.log("check response:", response);
+      // console.log("check response:", response);
       if (response.errCode !== 0) {
         alert(response.errMessage);
       } else {
