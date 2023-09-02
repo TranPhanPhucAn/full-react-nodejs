@@ -18,6 +18,8 @@ import {
   createNewUserService,
   getAllUsers,
   deleteUser,
+  editUserService,
+  getTopDoctorHomeService,
 } from "../../services/userService";
 import { toast } from "react-toastify";
 import { dispatch } from "../../redux";
@@ -165,4 +167,53 @@ export const deleteUserSuccess = () => ({
 });
 export const deleteUserFailed = () => ({
   type: actionTypes.DELETE_USER_FAILED,
+});
+export const editAUser = (data) => {
+  return async (dispatch, getState) => {
+    try {
+      let res = await editUserService(data);
+      if (res && res.errCode === 0) {
+        toast.success("Edit user success");
+        dispatch(editUserSuccess());
+        dispatch(fetchAllUsersStart());
+      } else {
+        toast.error("Edit the user error!");
+        dispatch(editUserFailed());
+      }
+    } catch (e) {
+      toast.error("Edit the user error!");
+      dispatch(editUserFailed());
+    }
+  };
+};
+export const editUserSuccess = () => ({
+  type: actionTypes.EDIT_USER_SUCCESS,
+});
+export const editUserFailed = () => ({
+  type: actionTypes.EDIT_USER_FAILED,
+});
+export const fetchTopDoctor = () => {
+  return async (dispatch, getState) => {
+    try {
+      let res = await getTopDoctorHomeService(10);
+      // console.log("check res: ", res);
+      if (res && res.errCode === 0) {
+        dispatch(fetchTopDoctorsSuccess(res.data));
+      } else {
+        toast.error("Fetch top doctors error!");
+        dispatch(fetchTopDoctorsFailed());
+      }
+    } catch (e) {
+      toast.error("Fetch all users error!");
+      // console.log("role error:", e);
+      dispatch(fetchTopDoctorsFailed());
+    }
+  };
+};
+export const fetchTopDoctorsSuccess = (data) => ({
+  type: actionTypes.FETCH_TOP_DOCTORS_SUCCESS,
+  doctors: data,
+});
+export const fetchTopDoctorsFailed = () => ({
+  type: actionTypes.FETCH_TOP_DOCTORS_FAILED,
 });
