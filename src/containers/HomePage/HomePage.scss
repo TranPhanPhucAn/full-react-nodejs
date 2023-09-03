@@ -38,6 +38,9 @@
     background: #d7d7d7 !important;
   }
 }
+.slick-disabled {
+  display: none !important;
+}
 .section-share {
   height: 330px;
   &.section-specialty {

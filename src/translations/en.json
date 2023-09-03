@@ -11,7 +11,7 @@
     "support": "Support"
   },
   "banner": {
-    "title1": "MEDICAL BASE",
+    "title1": "MEDICAL PLATFORM",
     "title2": "COMPREHENSIVE HEALTH CARE",
     "child1": "Specialize examination",
     "child2": "Remote examination",
@@ -169,5 +169,9 @@
       "remove-assign-fail": "Fail to unassign service package to customer",
       "sure-delete-assign": "Are you sure to unassign service package to customer?"
     }
+  },
+  "homepage": {
+    "out-standing-doctor": "Last week's feartured doctor",
+    "more-infor": "More infor"
   }
 }

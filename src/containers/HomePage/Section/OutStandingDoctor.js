@@ -54,15 +54,18 @@ class OutStandingDoctor extends Component {
   render() {
     let doctors = this.state.doctorArr;
     // console.log("doctorArr: ", doctors[0]);
-    if (doctors && doctors.length > 0 && doctors[0]) {
-      console.log("fdsafd", doctors[0].positionData.valueVi);
-    }
+    // if (doctors && doctors.length > 0 && doctors[0]) {
+    //   console.log("fdsafd", doctors[0].positionData.valueVi);
+    // }
     return (
       <div className="section-share section-outstanding-doctor">
         <div className="section-container">
           <div className="section-header">
-            <span className="title-section">Bác sĩ nổi bật tuần qua</span>
-            <button className="btn-section">Xem thêm</button>
+            <span className="title-section">
+              <FormattedMessage id="homepage.outstanding-doctor" />
+            </span>
+            <FormattedMessage id="homepage.more-infor" />
+            <button className="btn-section"></button>
           </div>
           <div className="section-body">
             <Slider {...this.props.settings}>
@@ -75,7 +78,7 @@ class OutStandingDoctor extends Component {
                       "binary"
                     );
                   }
-                  let nameVi = `${item.positionData.valueVi}, ${item.firstName} ${item.lastName}`;
+                  let nameVi = `${item.positionData.valueVi}, ${item.lastName} ${item.firstName}`;
                   let nameEn = `${item.positionData.valueEn}, ${item.firstName} ${item.lastName}`;
                   return (
                     <div className="img-customize ">
