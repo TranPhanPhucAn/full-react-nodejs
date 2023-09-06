@@ -20,6 +20,8 @@ import {
   deleteUser,
   editUserService,
   getTopDoctorHomeService,
+  getAllDoctors,
+  saveDetailDoctorService,
 } from "../../services/userService";
 import { toast } from "react-toastify";
 import { dispatch } from "../../redux";
@@ -204,7 +206,7 @@ export const fetchTopDoctor = () => {
         dispatch(fetchTopDoctorsFailed());
       }
     } catch (e) {
-      toast.error("Fetch all users error!");
+      toast.error("Fetch top doctors error!");
       // console.log("role error:", e);
       dispatch(fetchTopDoctorsFailed());
     }
@@ -217,3 +219,53 @@ export const fetchTopDoctorsSuccess = (data) => ({
 export const fetchTopDoctorsFailed = () => ({
   type: actionTypes.FETCH_TOP_DOCTORS_FAILED,
 });
+export const fetchAllDoctors = () => {
+  return async (dispatch, getState) => {
+    try {
+      let res = await getAllDoctors();
+      // console.log("check res: ", res);
+      if (res && res.errCode === 0) {
+        dispatch(fetchAllDoctorsSuccess(res.data));
+      } else {
+        toast.error("Fetch top doctors error!");
+        dispatch({
+          type: actionTypes.FETCH_ALL_DOCTORS_FAILED,
+        });
+      }
+    } catch (e) {
+      toast.error("Fetch all doctors error!");
+      // console.log("role error:", e);
+      dispatch({
+        type: actionTypes.FETCH_ALL_DOCTORS_FAILED,
+      });
+    }
+  };
+};
+export const fetchAllDoctorsSuccess = (data) => ({
+  type: actionTypes.FETCH_ALL_DOCTORS_SUCCESS,
+  doctors: data,
+});
+
+export const saveDetailDoctor = (data) => {
+  return async (dispatch, getState) => {
+    try {
+      let res = await saveDetailDoctorService(data);
+      if (res && res.errCode === 0) {
+        toast.success("Save infor detail doctor succeed!");
+        dispatch({
+          type: actionTypes.SAVE_DETAIL_DOCTOR_SUCCESS,
+        });
+      } else {
+        toast.error("Save infor detail doctor error!");
+        dispatch({
+          type: actionTypes.SAVE_DETAIL_DOCTOR_FAILED,
+        });
+      }
+    } catch (e) {
+      toast.error("Save infor detail doctor error!");
+      dispatch({
+        type: actionTypes.SAVE_DETAIL_DOCTOR_FAILED,
+      });
+    }
+  };
+};

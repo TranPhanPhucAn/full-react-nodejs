@@ -8,6 +8,7 @@ import "slick-carousel/slick/slick-theme.css";
 import OutStandingDoctorImg from "../../../assets/outstanding-doctor/anh-dai-dien-bs.jpg";
 import * as actions from "../../../store/actions";
 import { languages } from "../../../utils";
+import { withRouter } from "react-router";
 // function SampleNextArrow(props) {
 //   const { className, style, onClick } = props;
 //   return (
@@ -51,6 +52,10 @@ class OutStandingDoctor extends Component {
       );
     }
   }
+  handleViewDetailDoctor = (doctor) => {
+    console.log("detail doctor:", doctor);
+    this.props.history.push(`/detail-doctor/${doctor.id}`);
+  };
   render() {
     let doctors = this.state.doctorArr;
     // console.log("doctorArr: ", doctors[0]);
@@ -81,7 +86,11 @@ class OutStandingDoctor extends Component {
                   let nameVi = `${item.positionData.valueVi}, ${item.lastName} ${item.firstName}`;
                   let nameEn = `${item.positionData.valueEn}, ${item.firstName} ${item.lastName}`;
                   return (
-                    <div className="img-customize ">
+                    <div
+                      className="img-customize"
+                      key={index}
+                      onClick={() => this.handleViewDetailDoctor(item)}
+                    >
                       <div className="customize-border">
                         <div className="outer-bg">
                           <div
@@ -198,4 +207,6 @@ const mapDispatchToProps = (dispatch) => {
   };
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(OutStandingDoctor);
+export default withRouter(
+  connect(mapStateToProps, mapDispatchToProps)(OutStandingDoctor)
+);
