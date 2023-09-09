@@ -75,6 +75,9 @@
       "manage-specialty": "Manage specialty",
       "handbook": "Handbook",
       "manage-handbook": "Manage handbook"
+    },
+    "doctor": {
+      "manage-schedule": "Manage Doctor's schedule"
     }
   },
   "manage-user": {
@@ -173,5 +176,8 @@
   "homepage": {
     "out-standing-doctor": "Last week's feartured doctor",
     "more-infor": "More infor"
+  },
+  "manage-schedule": {
+    "title": "Manage doctor's examination plan"
   }
 }

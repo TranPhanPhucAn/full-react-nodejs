@@ -75,6 +75,9 @@
       "manage-specialty": "Quản lý chuyên khoa",
       "handbook": "Cẩm nang",
       "manage-handbook": "Quản lý cẩm nang"
+    },
+    "doctor": {
+      "manage-schedule": "Quản lý kế hoạch khám bệnh"
     }
   },
   "manage-user": {
@@ -173,5 +176,8 @@
   "homepage": {
     "outstanding-doctor": "Bác sĩ nổi bật tuần qua",
     "more-infor": "Xem thêm"
+  },
+  "manage-schedule": {
+    "title": "Quản lý kế hoạch khám bệnh của bác sĩ"
   }
 }

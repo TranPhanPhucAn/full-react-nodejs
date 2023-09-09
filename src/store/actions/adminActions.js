@@ -24,7 +24,7 @@ import {
   saveDetailDoctorService,
 } from "../../services/userService";
 import { toast } from "react-toastify";
-import { dispatch } from "../../redux";
+// import { dispatch } from "../../redux";
 // export const fetchGenderStart = () => ({
 //   type: actionTypes.FETCH_GENDER_START,
 // });

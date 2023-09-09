@@ -228,7 +228,7 @@ class UserRedux extends Component {
       position,
       role,
       avatar,
-      isDisable,
+      // isDisable,
     } = this.state;
     return (
       <div className="user-redux-container">

@@ -3,12 +3,19 @@ import { FormattedMessage } from "react-intl";
 import { connect } from "react-redux";
 import "./ManageDoctor.scss";
 import * as actions from "../../../store/actions";
-import { languages } from "../../../utils";
+import { languages, CRUD_ACTIONS } from "../../../utils";
 import MarkdownIt from "markdown-it";
 import MdEditor from "react-markdown-editor-lite";
 // import style manually
 import "react-markdown-editor-lite/lib/index.css";
 import Select from "react-select";
+import actionTypes from "../../../store/actions/actionTypes";
+import {
+  getDetailInforDoctor,
+  editDetailDoctorByIdService,
+} from "../../../services/userService";
+import { toast } from "react-toastify";
+
 // Initialize a markdown parser
 const mdParser = new MarkdownIt(/* Markdown-it options */);
 class ManageDoctor extends Component {
@@ -20,6 +27,7 @@ class ManageDoctor extends Component {
       selectedDoctor: "",
       description: "",
       listDoctors: [],
+      action: CRUD_ACTIONS.CREATE,
     };
   }
   componentDidMount() {
@@ -62,21 +70,71 @@ class ManageDoctor extends Component {
       contentHTML: html,
     });
   };
-  handleSaveContentMarkdown = () => {
+  handleSaveContentMarkdown = async () => {
     console.log("doctor: ", this.selectedDoctor);
-    this.props.saveDetailDoctor({
-      contentHTML: this.state.contentHTML,
-      contentMarkdown: this.state.contentMarkdown,
-      description: this.state.description,
-      doctorId: this.state.selectedDoctor.value,
+    if (this.state.action === CRUD_ACTIONS.CREATE) {
+      this.props.saveDetailDoctor({
+        contentHTML: this.state.contentHTML,
+        contentMarkdown: this.state.contentMarkdown,
+        description: this.state.description,
+        doctorId: this.state.selectedDoctor.value,
+      });
+    } else {
+      let response = await editDetailDoctorByIdService({
+        id: this.state.selectedDoctor.value,
+        description: this.state.description,
+        contentHTML: this.state.contentHTML,
+        contentMarkdown: this.state.contentMarkdown,
+      });
+      // console.log("edit: ", response);
+      if (response && response.errCode === 0) {
+        toast.success("Edit detail doctor success");
+      } else {
+        toast.error("Edit detail doctor failed");
+      }
+    }
+    this.setState({
+      contentMarkdown: "",
+      contentHTML: "",
+      selectedDoctor: "",
+      description: "",
+      action: CRUD_ACTIONS.CREATE,
     });
   };
-  handleChange = (selectedDoctor) => {
-    this.setState(
+  handleChange = async (selectedDoctor) => {
+    await this.setState(
       { selectedDoctor }
-      // () =>
+      // , () =>
       // console.log(`Option selected:`, this.state.selectedDoctor)
     );
+    let res = await getDetailInforDoctor(selectedDoctor.value);
+    let doctor = {};
+    if (res && res.errCode === 0) {
+      doctor = res.data;
+    }
+    console.log("doctor detail: ", doctor);
+    if (doctor.Markdown !== null) {
+      // console.log("null 12345");
+      this.setState(
+        {
+          action: CRUD_ACTIONS.EDIT,
+          description: doctor.Markdown.description,
+          contentMarkdown: doctor.Markdown.contentMarkdown,
+          contentHTML: doctor.Markdown.contentHTML,
+        }
+        // ,
+        // () => {
+        //   console.log("state: ", this.state);
+        // }
+      );
+    } else {
+      this.setState({
+        contentMarkdown: "",
+        contentHTML: "",
+        description: "",
+        action: CRUD_ACTIONS.CREATE,
+      });
+    }
   };
   handleOnChangeDesc = (event) => {
     this.setState({
@@ -112,13 +170,22 @@ class ManageDoctor extends Component {
             style={{ height: "500px" }}
             renderHTML={(text) => mdParser.render(text)}
             onChange={this.handleEditorChange}
+            value={this.state.contentMarkdown}
           />
         </div>
         <button
           onClick={() => this.handleSaveContentMarkdown()}
-          className="save-content-doctor"
+          className={
+            this.state.action === CRUD_ACTIONS.CREATE
+              ? "save-content-doctor"
+              : "edit-content-doctor"
+          }
         >
-          Lưu thông tin
+          {this.state.action === CRUD_ACTIONS.CREATE ? (
+            <span>Tạo thông tin</span>
+          ) : (
+            <span>Lưu thông tin</span>
+          )}
         </button>
       </div>
     );
