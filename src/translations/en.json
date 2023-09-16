@@ -178,6 +178,9 @@
     "more-infor": "More infor"
   },
   "manage-schedule": {
-    "title": "Manage doctor's examination plan"
+    "title": "Manage doctor's examination plan",
+    "choose-doctor": "Choose doctor",
+    "choose-date": "Choose date",
+    "save": "Save infor"
   }
 }

@@ -112,7 +112,7 @@ class ManageDoctor extends Component {
     if (res && res.errCode === 0) {
       doctor = res.data;
     }
-    console.log("doctor detail: ", doctor);
+    // console.log("doctor detail: ", doctor);
     if (doctor.Markdown !== null) {
       // console.log("null 12345");
       this.setState(
@@ -194,6 +194,7 @@ class ManageDoctor extends Component {
 
 const mapStateToProps = (state) => {
   return {
+    isLoggedIn: state.user.isLoggedIn,
     allDoctors: state.admin.allDoctors,
     language: state.app.language,
   };
