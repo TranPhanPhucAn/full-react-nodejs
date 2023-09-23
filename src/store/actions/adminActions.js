@@ -24,6 +24,7 @@ import {
   saveDetailDoctorService,
 } from "../../services/userService";
 import { toast } from "react-toastify";
+import { assign } from "lodash";
 // import { dispatch } from "../../redux";
 // export const fetchGenderStart = () => ({
 //   type: actionTypes.FETCH_GENDER_START,
@@ -291,6 +292,76 @@ export const fetchAllScheduleTime = () => {
       // console.log("role error:", e);
       dispatch({
         type: actionTypes.FETCH_ALLCODE_SCHEDULE_TIME_FAILED,
+      });
+    }
+  };
+};
+export const fetchAllPrice = () => {
+  return async (dispatch, getState) => {
+    try {
+      let res = await getAllCodeService("PRICE");
+      if (res && res.errCode === 0) {
+        dispatch({
+          type: actionTypes.FETCH_ALLCODE_PRICE_SUCCESS,
+          dataPrice: res.data,
+        });
+      } else {
+        // toast.error("Fetch allcode price failed");
+        dispatch({
+          type: actionTypes.FETCH_ALLCODE_PRICE_FAILED,
+        });
+      }
+    } catch (e) {
+      console.log("price lost: ", e);
+      // toast.error("Fetch all code price failed");
+      dispatch({
+        type: actionTypes.FETCH_ALLCODE_PRICE_FAILED,
+      });
+    }
+  };
+};
+export const fetchAllPayment = () => {
+  return async (dispatch, getState) => {
+    try {
+      let res = await getAllCodeService("PAYMENT");
+      if (res && res.errCode === 0) {
+        dispatch({
+          type: actionTypes.FETCH_ALLCODE_PAYMENT_SUCCESS,
+          dataPayment: res.data,
+        });
+      } else {
+        dispatch({
+          type: actionTypes.FETCH_ALLCODE_PAYMENT_FAILED,
+          dataPayment: res.data,
+        });
+      }
+    } catch (e) {
+      console.log(e);
+      // toast('Fetch all ')
+      dispatch({
+        type: actionTypes.FETCH_ALLCODE_PAYMENT_FAILED,
+      });
+    }
+  };
+};
+export const fetchAllProvince = () => {
+  return async (dispatch, getState) => {
+    try {
+      let res = await getAllCodeService("PROVINCE");
+      if (res && res.errCode === 0) {
+        dispatch({
+          type: actionTypes.FETCH_ALLCODE_PROVINCE_SUCCESS,
+          dataProvince: res.data,
+        });
+      } else {
+        dispatch({
+          type: actionTypes.FETCH_ALLCODE_PROVINCE_FAILED,
+        });
+      }
+    } catch (e) {
+      console.log(e);
+      dispatch({
+        type: actionTypes.FETCH_ALLCODE_PROVINCE_FAILED,
       });
     }
   };

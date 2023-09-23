@@ -40,6 +40,7 @@ const getScheduleDoctorByDate = (doctorId, date) => {
     `/api/get-schedule-doctor-by-date?doctorId=${doctorId}&date=${date}`
   );
 };
+
 export {
   handleLoginApi,
   getAllUsers,

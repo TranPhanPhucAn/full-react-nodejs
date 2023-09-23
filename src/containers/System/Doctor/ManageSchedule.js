@@ -76,6 +76,7 @@ class ManageSchedule extends Component {
     console.log("doctor detail bc: ", doctor);
   };
   handleOnChangeDatePicker = (date) => {
+    // console.log("asdfdsa: ", date[0]);
     this.setState({
       currentDate: date[0],
     });
@@ -97,6 +98,7 @@ class ManageSchedule extends Component {
   };
   haveSaveSchedule = async () => {
     let { rangeTime, selectedDoctor, currentDate } = this.state;
+    console.log("abd: ", currentDate);
     let result = [];
     if (!currentDate) {
       toast.error("Invalid date!");
@@ -129,11 +131,18 @@ class ManageSchedule extends Component {
       doctorId: selectedDoctor.value,
       formattedDate: formattedDate,
     });
-    console.log("check res: ", res);
+    // console.log("check res: ", res);
+    if (res && res.errCode === 0) {
+      toast.success("Save infor success");
+    } else {
+      toast.error("error saveBulkScheduleDoctor");
+      console.log("error saveBulkScheduleDoctor: ", res);
+    }
   };
   render() {
     let { rangeTime } = this.state;
     let { language } = this.props;
+    let yesterday = new Date(new Date().setDate(new Date().getDate() - 1));
     return (
       <div className="manage-schedule-container">
         <div className="m-s-title">
@@ -159,7 +168,7 @@ class ManageSchedule extends Component {
                 onChange={this.handleOnChangeDatePicker}
                 className="form-control"
                 value={this.state.currentDate}
-                minDate={new Date()}
+                minDate={yesterday}
               />
             </div>
             <div className="col-12 pick-hour-container">
