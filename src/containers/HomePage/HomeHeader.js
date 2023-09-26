@@ -20,7 +20,7 @@ class HomeHeader extends Component {
   render() {
     // const { isLoggedIn } = this.props;
     // let linkToRedirect = isLoggedIn ? "/system/user-manage" : "/login";
-    console.log("this props: ", this.props);
+    // console.log("this props: ", this.props);
     // return <Redirect to={linkToRedirect} />;
     let language = this.props.language;
     return (
