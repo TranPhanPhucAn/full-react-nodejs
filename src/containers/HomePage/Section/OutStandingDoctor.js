@@ -45,15 +45,14 @@ class OutStandingDoctor extends Component {
       this.setState(
         {
           doctorArr: this.props.doctorsRedux,
-        },
-        () => {
-          console.log("doctor: ", this.state.doctorArr);
         }
+        // () => {
+        //   console.log("doctor: ", this.state.doctorArr);
+        // }
       );
     }
   }
   handleViewDetailDoctor = (doctor) => {
-    console.log("detail doctor:", doctor);
     this.props.history.push(`/detail-doctor/${doctor.id}`);
   };
   render() {

@@ -14,6 +14,8 @@ class DoctorSchedule extends Component {
     this.state = {
       allDays: [],
       allAvailableTime: [],
+      isOpenModalBooking: false,
+      dataScheduleTimeModal: {},
     };
   }
   async componentDidMount() {
@@ -98,8 +100,24 @@ class DoctorSchedule extends Component {
       console.log("check appoint:", res);
     }
   };
+  handleClickScheduleTime = (time) => {
+    this.setState({
+      isOpenModalBooking: true,
+      dataScheduleTimeModal: time,
+    });
+  };
+  closeBookingModal = () => {
+    this.setState({
+      isOpenModalBooking: false,
+    });
+  };
   render() {
-    let { allDays, allAvailableTime } = this.state;
+    let {
+      allDays,
+      allAvailableTime,
+      isOpenModalBooking,
+      dataScheduleTimeModal,
+    } = this.state;
     let { language } = this.props;
     // console.log("all day: ", allDays);
     return (
@@ -138,6 +156,7 @@ class DoctorSchedule extends Component {
                           className={
                             language === languages.VI ? "btn-vie" : "btn-en"
                           }
+                          onClick={() => this.handleClickScheduleTime(item)}
                         >
                           {language === languages.VI
                             ? item.timeTypeData.valueVi
@@ -163,7 +182,11 @@ class DoctorSchedule extends Component {
             </div>
           </div>
         </div>
-        <BookingModal />
+        <BookingModal
+          isOpenModal={isOpenModalBooking}
+          closeBookingModal={this.closeBookingModal}
+          dataTime={dataScheduleTimeModal}
+        />
       </>
     );
   }

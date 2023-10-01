@@ -261,7 +261,7 @@ class ManageDoctor extends Component {
     let stateCopy = { ...this.state };
     let stateName = name.name;
     stateCopy[stateName] = selectedOption;
-    console.log("sds:", selectedOption, stateName);
+    // console.log("sds:", selectedOption, stateName);
 
     this.setState({
       ...stateCopy,
