@@ -7,46 +7,31 @@ import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import specialtyImg from "../../../assets/specialty/co-xuong-khop.jpg";
-// function SampleNextArrow(props) {
-//   const { className, style, onClick } = props;
-//   return (
-//     <div
-//       className={className}
-//       style={{ ...style, display: "block", background: "red" }}
-//       onClick={onClick}
-//     />
-//   );
-// }
-
-// function SamplePrevArrow(props) {
-//   const { className, style, onClick } = props;
-//   return (
-//     <div
-//       className={className}
-//       style={{ ...style, display: "block", background: "green" }}
-//       onClick={onClick}
-//     />
-//   );
-// }
+import { getAllSpecialty } from "../../../services/userService";
+import "./Specialty.scss";
 class Specialty extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      dataSpecialty: [],
+    };
+  }
+  async componentDidMount() {
+    let res = await getAllSpecialty();
+    if (res && res.errCode === 0) {
+      this.setState({
+        dataSpecialty: res.data,
+      });
+    }
+  }
   render() {
-    //   let settings = {
-    //     dots: false,
-    //     infinite: true,
-    //     speed: 500,
-    //     slidesToShow: 4,
-    //     slidesToScroll: 1,
-    //     // nextArrow: <SampleNextArrow />,
-    //     // prevArrow: <SamplePrevArrow />,
-    //   };
-    // const { isLoggedIn } = this.props;
-    // let linkToRedirect = isLoggedIn ? "/system/user-manage" : "/login";
+    let { dataSpecialty } = this.state;
     return (
       <div className="section-share section-specialty">
         <div className="section-container">
           <div className="section-header">
             <span className="title-section">
-              <FormattedMessage id="homepage.outstanding-doctor" />
+              <FormattedMessage id="homepage.specialty-popular" />
             </span>
             <button className="btn-section">
               <FormattedMessage id="homepage.more-infor" />
@@ -54,30 +39,25 @@ class Specialty extends Component {
           </div>
           <div className="section-body">
             <Slider {...this.props.settings}>
-              <div className="img-customize">
-                <img src={specialtyImg} />
-                <div>Cơ xương khớp 1</div>
-              </div>
-              <div className="img-customize">
-                <img src={specialtyImg} />
-                <div>Cơ xương khớp 2</div>
-              </div>
-              <div className="img-customize">
-                <img src={specialtyImg} />
-                <div>Cơ xương khớp 3</div>
-              </div>
-              <div className="img-customize">
-                <img src={specialtyImg} />
-                <div>Cơ xương khớp 4</div>
-              </div>
-              <div className="img-customize">
-                <img src={specialtyImg} />
-                <div>Cơ xương khớp 5</div>
-              </div>
-              <div className="img-customize">
-                <img src={specialtyImg} />
-                <div>Cơ xương khớp 6</div>
-              </div>
+              {dataSpecialty &&
+                dataSpecialty.length > 0 &&
+                dataSpecialty.map((item, index) => {
+                  let imageBase64 = "";
+                  if (item.image) {
+                    imageBase64 = new Buffer(item.image, "base64").toString(
+                      "binary"
+                    );
+                  }
+                  return (
+                    <div className="img-customize specialty-child" key={index}>
+                      <div
+                        className="bg-image section-specialty"
+                        style={{ backgroundImage: `url(${imageBase64})` }}
+                      ></div>
+                      <div className="specialty-name">{item.name}</div>
+                    </div>
+                  );
+                })}
             </Slider>
           </div>
         </div>
