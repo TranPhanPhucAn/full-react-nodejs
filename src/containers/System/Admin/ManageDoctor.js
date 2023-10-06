@@ -14,6 +14,7 @@ import {
   getDetailInforDoctor,
   editDetailDoctorByIdService,
   getAllSpecialty,
+  getAllClinic,
 } from "../../../services/userService";
 import { toast } from "react-toastify";
 
@@ -52,14 +53,15 @@ class ManageDoctor extends Component {
     this.props.fetchAllPayment();
     this.props.fetchAllProvince();
     let res = await getAllSpecialty();
-    console.log("spe res: ", res);
-    if (res && res.errCode === 0) {
+    let resClinic = await getAllClinic();
+    if (res && res.errCode === 0 && resClinic && resClinic.errCode === 0) {
       this.setState({
-        listSpecialty: this.buildDataSpecialty(res.data),
+        listSpecialty: this.buildDataSpeCli(res.data),
+        listClinic: this.buildDataSpeCli(resClinic.data),
       });
     }
   }
-  buildDataSpecialty = (inputData) => {
+  buildDataSpeCli = (inputData) => {
     let result = [];
     if (inputData && inputData.length > 0) {
       inputData.map((item, index) => {
@@ -213,6 +215,7 @@ class ManageDoctor extends Component {
       selectedPayment: "",
       selectedProvince: "",
       selectedSpecialty: "",
+      selectedClinic: "",
       nameClinic: "",
       addressClinic: "",
       note: "",
@@ -228,7 +231,8 @@ class ManageDoctor extends Component {
     );
     let res = await getDetailInforDoctor(selectedDoctor.value);
     let doctor = {};
-    let { listPayment, listPrice, listProvince, listSpecialty } = this.state;
+    let { listPayment, listPrice, listProvince, listSpecialty, listClinic } =
+      this.state;
     if (res && res.errCode === 0) {
       doctor = res.data;
     }
@@ -241,11 +245,13 @@ class ManageDoctor extends Component {
         priceId = "",
         provinceId = "",
         paymentId = "",
-        specialtyId = "";
+        specialtyId = "",
+        clinicId = "";
       let selectedPrice = "",
         selectedPayment = "",
         selectedProvince = "",
-        selectedSpecialty = "";
+        selectedSpecialty = "",
+        selectedClinic = "";
       if (doctor.Doctor_Infor) {
         addressClinic = doctor.Doctor_Infor.addressClinic;
         nameClinic = doctor.Doctor_Infor.nameClinic;
@@ -254,6 +260,7 @@ class ManageDoctor extends Component {
         priceId = doctor.Doctor_Infor.priceId;
         provinceId = doctor.Doctor_Infor.provinceId;
         specialtyId = doctor.Doctor_Infor.specialtyId;
+        clinicId = doctor.Doctor_Infor.clinicId;
         selectedPayment = listPayment.find((item) => {
           return item && item.value === paymentId;
         });
@@ -265,6 +272,9 @@ class ManageDoctor extends Component {
         });
         selectedSpecialty = listSpecialty.find((item) => {
           return item && item.value === specialtyId;
+        });
+        selectedClinic = listClinic.find((item) => {
+          return item && item.value === clinicId;
         });
       }
       this.setState(
@@ -280,6 +290,7 @@ class ManageDoctor extends Component {
           selectedPayment: selectedPayment,
           selectedProvince: selectedProvince,
           selectedSpecialty: selectedSpecialty,
+          selectedClinic: selectedClinic,
         }
         // ,
         // () => {
@@ -443,7 +454,7 @@ class ManageDoctor extends Component {
               value={this.state.selectedSpecialty}
               onChange={this.handleChangeSelectDoctorInfor}
               options={listSpecialty}
-              placeholder={<FormattedMessage id="admin.manage-doctor.price" />}
+              // placeholder={<FormattedMessage id="admin.manage-doctor.price" />}
             />
           </div>
           <div className="col-4 form-group">
@@ -455,7 +466,7 @@ class ManageDoctor extends Component {
               value={this.state.selectedClinic}
               onChange={this.handleChangeSelectDoctorInfor}
               options={listClinic}
-              placeholder={<FormattedMessage id="admin.manage-doctor.price" />}
+              // placeholder={<FormattedMessage id="admin.manage-doctor.price" />}
             />
           </div>
         </div>
