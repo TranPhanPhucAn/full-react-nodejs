@@ -8,6 +8,7 @@ import { getProfileDoctorById } from "../../../services/userService";
 import NumberFormat from "react-number-format";
 import _ from "lodash";
 import moment from "moment";
+import { Link } from "react-router-dom";
 class ProfileDoctor extends Component {
   constructor(props) {
     super(props);
@@ -34,8 +35,10 @@ class ProfileDoctor extends Component {
   };
   async componentDidUpdate(prevProps, prevState, snapshot) {
     if (this.props.doctorId !== prevProps.doctorId) {
+      let data = await this.getInforDoctor(this.props.doctorId);
       this.setState({
         doctorId: this.props.doctorId,
+        dataProfile: data,
       });
     }
   }
@@ -68,11 +71,12 @@ class ProfileDoctor extends Component {
     return <></>;
   };
   render() {
-    // console.log("profile:", this.state.doctorId);
+    console.log("profile:", this.state.doctorId);
     // console.log("profile: ", this.state.dataProfile.Doctor_Infor);
 
     let { dataProfile } = this.state;
-    let { language, dataTime } = this.props;
+    let { language, dataTime, isShowLinkDetail, isShowPrice, doctorId } =
+      this.props;
     let nameVi = "",
       nameEn = "";
     if (dataProfile && dataProfile.positionData) {
@@ -95,7 +99,7 @@ class ProfileDoctor extends Component {
               {language === languages.VI ? nameVi : nameEn}
             </div>
             <div className="down">
-              {this.props.idShowDescriptionDoctor === true ? (
+              {this.props.isShowDescriptionDoctor === true ? (
                 <>
                   {dataProfile.Markdown && dataProfile.Markdown.description && (
                     <span>{dataProfile.Markdown.description}</span>
@@ -107,33 +111,41 @@ class ProfileDoctor extends Component {
             </div>
           </div>
         </div>
-        <div className="price">
-          <FormattedMessage id="patient.booking-modal.price" />:{" "}
-          {dataProfile &&
-            dataProfile.Doctor_Infor &&
-            dataProfile.Doctor_Infor.priceTypeData &&
-            language === languages.VI && (
-              <NumberFormat
-                className="currency"
-                value={dataProfile.Doctor_Infor.priceTypeData.valueVi}
-                displayType={"text"}
-                thousandSeparator={true}
-                suffix={"VND"}
-              />
-            )}
-          {dataProfile &&
-            dataProfile.Doctor_Infor &&
-            dataProfile.Doctor_Infor.priceTypeData &&
-            language === languages.EN && (
-              <NumberFormat
-                className="currency"
-                value={dataProfile.Doctor_Infor.priceTypeData.valueEn}
-                displayType={"text"}
-                thousandSeparator={true}
-                suffix={"$"}
-              />
-            )}
-        </div>
+        {isShowLinkDetail === true && (
+          <div className="view-detail-doctor">
+            {/* <a href={`/detail-doctor/${doctorId}`}>Xem thêm</a> */}
+            <Link to={`/detail-doctor/${doctorId}`}>Xem thêm</Link>
+          </div>
+        )}
+        {isShowPrice === true && (
+          <div className="price">
+            <FormattedMessage id="patient.booking-modal.price" />:{" "}
+            {dataProfile &&
+              dataProfile.Doctor_Infor &&
+              dataProfile.Doctor_Infor.priceTypeData &&
+              language === languages.VI && (
+                <NumberFormat
+                  className="currency"
+                  value={dataProfile.Doctor_Infor.priceTypeData.valueVi}
+                  displayType={"text"}
+                  thousandSeparator={true}
+                  suffix={"VND"}
+                />
+              )}
+            {dataProfile &&
+              dataProfile.Doctor_Infor &&
+              dataProfile.Doctor_Infor.priceTypeData &&
+              language === languages.EN && (
+                <NumberFormat
+                  className="currency"
+                  value={dataProfile.Doctor_Infor.priceTypeData.valueEn}
+                  displayType={"text"}
+                  thousandSeparator={true}
+                  suffix={"$"}
+                />
+              )}
+          </div>
+        )}
       </div>
     );
   }
