@@ -84,13 +84,15 @@ class DoctorSchedule extends Component {
     }
     if (this.props.doctorIdFromParent !== prevProps.doctorIdFromParent) {
       let { allDays } = this.state;
-      let res = await getScheduleDoctorByDate(
-        this.props.doctorIdFromParent,
-        allDays[0].value
-      );
-      this.setState({
-        allAvailableTime: res.data ? res.data : [],
-      });
+      if (allDays) {
+        let res = await getScheduleDoctorByDate(
+          this.props.doctorIdFromParent,
+          allDays[0].value
+        );
+        this.setState({
+          allAvailableTime: res.data ? res.data : [],
+        });
+      }
     }
   }
   handleOnChangeSelect = async (event) => {
